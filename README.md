@@ -1,11 +1,8 @@
 # Cisco VTP – Configuration Revision Risk & Safe Integration
 
-##  Overview
+## Overview
 
-This laboratory explores Cisco VLAN Trunking Protocol (VTP)
-with a focus on the Configuration Revision mechanism and the
-risks associated with integrating a switch containing a higher
-VTP revision.
+This laboratory explores Cisco VLAN Trunking Protocol (VTP) with a focus on the Configuration Revision mechanism and the risks associated with integrating a switch containing a higher VTP revision.
 
 The laboratory is divided into two scenarios:
 
@@ -14,7 +11,7 @@ The laboratory is divided into two scenarios:
 
 ---
 
-##  Objectives
+## Objectives
 
 - Understand the purpose of VTP
 - Understand VTP Server and Client modes
@@ -27,18 +24,15 @@ The laboratory is divided into two scenarios:
 
 ---
 
-##  Topology
+## Topology
 
-<img width="422" height="175" alt="Topologie" src="https://github.com/user-attachments/assets/982f78c8-1e62-4f0b-a9f6-5c8c6fd789ef" />
+The laboratory uses four switches:
 
-
-### Devices
-
-| Device | VTP Mode |
+| Device | Role |
 |---|---|
-| ACANEY-SW-VTP-SERVER | Server |
-| ACANEY-SW-VTP-CLIENT-1 | Client |
-| ACANEY-SW-VTP-CLIENT-2 | Client |
+| ACANEY-SW-VTP-SERVER | VTP Server |
+| ACANEY-SW-VTP-CLIENT-1 | VTP Client |
+| ACANEY-SW-VTP-CLIENT-2 | VTP Client |
 | ACANEY-SW-VTP-OTHER | Experimental switch |
 
 ### VTP parameters
@@ -50,7 +44,7 @@ The laboratory is divided into two scenarios:
 
 ---
 
-#  Scenario 1 – Risky Integration
+# Scenario 1 – Risky Integration
 
 ## Initial state
 
@@ -59,69 +53,120 @@ The existing VTP domain is running with:
 - Revision: 8
 - VLANs: 9
 
-The experimental switch is prepared with:
+The experimental switch is prepared offline with:
 
 - Revision: 9
 - VLANs: 14
 
-## Expected risk
+### Capture 01 — Initial topology
 
-A switch with a higher configuration revision can cause
-the VTP domain to adopt its VLAN database.
+**Indicative sentence:**  
+*The topology shows the VTP server, the two VTP clients and the isolated experimental switch before the risky integration.*
 
-## Observation
+### Capture 02 — Initial VTP domain
 
-After establishing the trunk, the domain converged to:
+**Indicative sentence:**  
+*The VTP server is initially at configuration revision 8 with 9 VLANs in the ACANEY-VTP domain.*
 
-- Revision: 9
-- VLANs: 14
+### Capture 03 — Higher-revision switch
 
-The clients synchronized with the new VLAN database.
+**Indicative sentence:**  
+*The experimental switch is intentionally prepared with configuration revision 9 and a different VLAN database containing 14 VLANs.*
 
-<img width="389" height="180" alt="Risk-Client-1" src="https://github.com/user-attachments/assets/91c774cb-c00c-4f78-b9e9-5d994208a790" />
-<img width="384" height="182" alt="Risk-Client-2" src="https://github.com/user-attachments/assets/c5ec78a6-730e-4570-a56f-ec2583364e29" />
+### Capture 04 — State comparison before integration
 
+**Indicative sentence:**  
+*Before the trunk is established, the two VTP databases are compared to highlight the revision mismatch.*
 
----
+## Risky integration
 
-#  Scenario 2 – Safe Integration
+The experimental switch is connected to the existing VTP domain through the trunk.
 
-The experimental switch was isolated and its previous VLAN
-database was removed.
+### Capture 05 — Trunk establishment
 
-The switch was then verified before being integrated into
-the VTP domain.
+**Indicative sentence:**  
+*The trunk between the existing VTP domain and the experimental switch is established, allowing VTP advertisements to be exchanged.*
 
-## Final result
+### Capture 06 — VTP synchronization after integration
 
-The switch synchronized with the existing domain:
+**Indicative sentence:**  
+*After synchronization, the existing VTP domain has converged to revision 9 and 14 VLANs, demonstrating the historical risk of introducing a switch with a higher revision.*
 
-- Revision: 8
-- VLANs: 9
+### Capture 07 — Client propagation
 
-The existing VTP database remained unchanged.
+**Indicative sentence:**  
+*The VTP clients have also synchronized to revision 9 and the new VLAN database, showing that the change propagates through the VTP domain.*
 
-<img width="391" height="181" alt="Safe-Client-1" src="https://github.com/user-attachments/assets/0694dc3b-9a54-409e-8dac-716bb3baa677" />
-<img width="390" height="185" alt="Safe-Client-2" src="https://github.com/user-attachments/assets/c65e327d-89ce-45cf-bad1-0a38ba5baf47" />
+### Capture 08 — Final risky-state verification
 
-
----
-
-#  Key Lessons
-
-The Configuration Revision is not the number of VLANs.
-
-It is a revision counter used by VTP to determine whether a
-received VLAN database is newer than the locally stored one.
-
-Before integrating a switch into an existing VTP environment,
-its VTP state and VLAN database should therefore be verified.
+**Indicative sentence:**  
+*The final verification confirms that the server, clients and experimental switch have converged to the same VTP revision and VLAN database.*
 
 ---
 
-#  Repository Contents
+# Scenario 2 – Safe Integration
 
-- `labs/` → Packet Tracer laboratory files
-- `documentation/` → detailed laboratory documentation
-- `screenshots/` → evidence of the different stages
-- `configs/` → relevant commands and configurations
+The experimental switch is first isolated from the existing VTP domain.
+
+Its previous VLAN database and configuration are removed before integration.
+
+### Capture 09 — Incoming switch isolated
+
+**Indicative sentence:**  
+*The experimental switch is isolated from the existing VTP domain before any integration attempt is made.*
+
+### Capture 10 — VTP state inspection
+
+**Indicative sentence:**  
+*The VTP status of the incoming switch is inspected before connection in order to identify its domain, operating mode, VLAN count and configuration revision.*
+
+### Capture 11 — VLAN database reset
+
+**Indicative sentence:**  
+*The previous VLAN database is removed from the incoming switch so that it cannot introduce an old or higher configuration revision into the existing domain.*
+
+### Capture 12 — Clean VTP state
+
+**Indicative sentence:**  
+*The switch is verified in a clean state before being connected to the existing VTP environment.*
+
+### Capture 13 — Correct VTP domain configuration
+
+**Indicative sentence:**  
+*The incoming switch is configured with the expected ACANEY-VTP domain while it is still isolated.*
+
+### Capture 14 — Safe trunk integration
+
+**Indicative sentence:**  
+*The cleaned switch is connected to the existing VTP domain through the trunk after its VTP state has been verified.*
+
+### Capture 15 — Safe synchronization
+
+**Indicative sentence:**  
+*After synchronization, the incoming switch adopts the existing VTP database instead of imposing its previous VLAN database on the domain.*
+
+### Capture 16 — Final safe-state verification
+
+**Indicative sentence:**  
+*The final verification confirms that the existing VTP domain remains at revision 8 with 9 VLANs and that the incoming switch has synchronized correctly.*
+
+---
+
+# Key Lessons
+
+The Configuration Revision is **not** the number of VLANs.
+
+It is a revision counter used by VTP to determine whether a received VLAN database is newer than the locally stored one.
+
+Before integrating a switch into an existing VTP environment, its VTP state and VLAN database should therefore be verified.
+
+The laboratory demonstrates a historical VTP risk in a controlled Packet Tracer environment. In modern network designs, VTP should be evaluated carefully and is often avoided in favor of explicit VLAN management or safer VTP configurations.
+
+---
+
+# Repository Contents
+
+- `labs/LAB-VTP-AVEC-RISQUE.pkt` → risky integration scenario
+- `labs/LAB-VTP-SANS-RISQUE.pkt` → safe integration scenario
+- `screenshots/` → screenshots to be added manually
+- `documentation/` → detailed documentation to be added later if required
