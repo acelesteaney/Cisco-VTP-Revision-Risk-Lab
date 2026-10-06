@@ -152,6 +152,35 @@ Its previous VLAN database and configuration are removed before integration.
 
 ---
 
+# Risky vs Safe Integration
+
+| | Risky integration | Safe integration |
+|---|---|---|
+| Incoming switch | Higher revision (9) and different VLAN database | Previous VLAN database removed before integration |
+| Initial domain | Revision 8 / 9 VLANs | Revision 8 / 9 VLANs |
+| Result | Domain converges to revision 9 / 14 VLANs | Domain remains at revision 8 / 9 VLANs |
+| Main issue | Uncontrolled VTP database synchronization | Controlled switch integration |
+| Control point | Trunk connected before validating VTP state | VTP state validated and reset before connection |
+
+---
+
+# What This Lab Proves
+
+This project is not only a Packet Tracer configuration exercise.
+
+It demonstrates the ability to:
+
+- identify a network configuration risk;
+- understand how VTP Configuration Revision influences VLAN database synchronization;
+- reproduce the risk in a controlled environment;
+- analyze the resulting change across the VTP domain;
+- apply a controlled switch-integration procedure;
+- verify the final state using operational commands.
+
+The main lesson is that a switch should not be connected to an existing VTP environment without first checking its VTP domain, operating mode, VLAN database and Configuration Revision.
+
+---
+
 # Key Lessons
 
 The Configuration Revision is **not** the number of VLANs.
@@ -169,4 +198,5 @@ The laboratory demonstrates a historical VTP risk in a controlled Packet Tracer 
 - `labs/LAB-VTP-AVEC-RISQUE.pkt` → risky integration scenario
 - `labs/LAB-VTP-SANS-RISQUE.pkt` → safe integration scenario
 - `screenshots/` → screenshots to be added manually
+- `configs/commands.md` → key commands used in the laboratory
 - `documentation/` → detailed documentation to be added later if required
