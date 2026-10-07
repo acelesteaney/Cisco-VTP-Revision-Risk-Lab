@@ -1,39 +1,47 @@
-# Scenario 1 — Risky VTP Integration
+# 01 — Intégration VTP risquée
 
-## Purpose
-Demonstrate the historical risk of integrating a switch containing a higher VTP Configuration Revision.
+## Pourquoi j'ai réalisé ce scénario
 
-## Initial state
-Existing domain: revision 8, 9 VLANs.  
-Experimental switch: revision 9, 14 VLANs.
+Je voulais vérifier concrètement ce qui pouvait se produire lorsqu'un switch provenant d'un autre environnement VTP était raccordé à un domaine existant sans avoir contrôlé son état au préalable.
 
-The higher revision is intentional.
+L'objectif n'était donc pas seulement de configurer VTP, mais de **provoquer volontairement une situation à risque**, puis d'observer la réaction du domaine.
 
-## Evidence
+## Situation de départ
 
-### Capture 01 — Initial topology
-The topology shows the VTP server, two clients and the isolated experimental switch.
+Le domaine existant était à : **Configuration Revision 8** et **9 VLANs**.
 
-### Capture 02 — Initial VTP domain
-The server is at revision 8 with 9 VLANs in the ACANEY-VTP domain.
+J'ai ensuite préparé le commutateur expérimental avec : **Configuration Revision 9** et **14 VLANs**.
 
-### Capture 03 — Higher-revision switch
-The experimental switch is at revision 9 with a different VLAN database containing 14 VLANs.
+La révision du commutateur expérimental était donc volontairement supérieure à celle du domaine existant.
 
-### Capture 04 — State comparison
-The two VTP states are compared before integration to highlight the revision mismatch.
+## Déroulement et éléments de preuve
 
-### Capture 05 — Trunk establishment
-The trunk is established, allowing VTP advertisements to be exchanged.
+### Architecture initiale du laboratoire
+**Indication pour la capture :** montrer la topologie complète avec le serveur VTP, les deux clients et le commutateur expérimental encore isolé.
 
-### Capture 06 — VTP synchronization
-After synchronization, the domain converges to revision 9 and 14 VLANs.
+### État initial du domaine VTP
+**Indication pour la capture :** afficher le show vtp status du serveur avant l'intégration, avec la révision 8 et les 9 VLANs.
 
-### Capture 07 — Client propagation
-The clients synchronize to revision 9 and the new VLAN database.
+### Préparation du commutateur à révision supérieure
+**Indication pour la capture :** afficher l'état VTP du commutateur expérimental montrant la révision 9 et les 14 VLANs.
 
-### Capture 08 — Final risky state
-The server, clients and experimental switch show the converged VTP state.
+### Comparaison avant raccordement
+**Indication pour la capture :** mettre en évidence la différence entre l'état du domaine existant et celui du commutateur entrant avant de créer le lien.
 
-## Result
-The scenario demonstrates why the VTP state of an incoming switch must be checked before integration.
+### Établissement du trunk
+**Indication pour la capture :** montrer la configuration ou la vérification du trunk entre le domaine existant et le commutateur expérimental.
+
+### Synchronisation VTP après intégration
+**Indication pour la capture :** afficher le show vtp status après raccordement et montrer que le domaine converge vers la révision 9 et les 14 VLANs.
+
+### Propagation vers les clients
+**Indication pour la capture :** afficher l'état VTP d'un ou des clients après synchronisation pour montrer la propagation de la nouvelle base VLAN.
+
+### État final après l'intégration à risque
+**Indication pour la capture :** montrer l'état final des équipements et la convergence de la révision et de la base VLAN.
+
+## Ce que j'ai constaté
+
+Le résultat m'a permis de comprendre concrètement que la Configuration Revision joue un rôle déterminant dans la synchronisation VTP. Le problème n'est donc pas simplement qu'un switch possède « plus de VLANs », mais qu'il arrive avec une base VLAN considérée comme plus récente par VTP.
+
+Cette expérience m'a surtout montré pourquoi **l'état d'un switch entrant doit être vérifié avant son raccordement à un domaine VTP existant**.
