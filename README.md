@@ -2,7 +2,7 @@
 
 ## À travers ce lab
 
-À travers ce laboratoire, j'ai cherché à comprendre les risques liés à l'intégration d'un switch dans un domaine VTP, puis à mettre en place une procédure maîtrisée.
+À travers ce laboratoire, j'ai cherché à comprendre les risques liés à l'intégration d'un switch dans un domaine VTP, puis à mettre en place une procédure maîtrisée. VTP (VLAN Trunking Protocol) est un protocole propriétaire Cisco qui permet de diffuser les informations de VLAN entre les commutateurs d'un même domaine VTP, ce qui facilite la gestion centralisée de leur base VLAN.
 
 ## Ce que j'ai travaillé
 - Comprendre VTP Server / Client.
@@ -60,6 +60,6 @@ Ce laboratoire m'a surtout permis de comprendre une chose que je ne voulais pas 
 
 En manipulant volontairement deux bases VLAN différentes, j'ai constaté qu'un switch possédant une révision plus élevée peut influencer la synchronisation du domaine VTP. C'est cette observation qui m'a amené à considérer l'intégration d'un nouveau switch comme une étape qui doit être **vérifiée avant d'être connectée**, et non comme une simple opération de câblage.
 
-> **Avant d'intégrer, je vérifie. Avant de modifier, je comprends.**
+Cette expérimentation m'a surtout appris qu'avant d'intégrer un équipement, je dois vérifier son état et ce qu'il est susceptible d'annoncer au réseau, et qu'avant de modifier une configuration, je dois d'abord en comprendre les conséquences.
 
 Ce laboratoire reproduit un comportement historique de VTP dans un environnement Packet Tracer contrôlé. Dans une infrastructure moderne, il faut également évaluer si VTP est réellement adapté au besoin.
