@@ -1,36 +1,45 @@
-# Scenario 2 — Safe VTP Integration
+# 02 — Intégration VTP sécurisée
 
-## Purpose
-Demonstrate a controlled procedure for integrating an incoming switch.
+## Pourquoi j'ai réalisé ce scénario
 
-## Procedure
-The switch is isolated first. Its previous VLAN database and configuration are removed before integration.
+Après avoir volontairement provoqué le scénario à risque, je voulais tester l'approche inverse : **comment intégrer le même type de switch sans lui permettre d'imposer son ancienne base VLAN au domaine existant ?**
 
-## Evidence
+J'ai donc repris le problème sous l'angle d'une intégration contrôlée.
 
-### Capture 09 — Incoming switch isolated
-The experimental switch is isolated from the existing VTP domain.
+## Principe retenu
 
-### Capture 10 — VTP state inspection
-The domain, operating mode, VLAN count and revision are inspected before connection.
+Le commutateur entrant doit être : isolé, inspecté, nettoyé de son ancienne base VLAN et de sa configuration, préparé avec les paramètres attendus, puis seulement raccordé au domaine existant.
 
-### Capture 11 — VLAN database reset
-The previous VLAN database is removed before integration.
+## Déroulement et éléments de preuve
 
-### Capture 12 — Clean VTP state
-The switch is verified in a clean state.
+### Isolement du commutateur entrant
+**Indication pour la capture :** montrer que le commutateur expérimental est encore séparé du domaine existant avant toute opération de nettoyage.
 
-### Capture 13 — Correct VTP domain
-The incoming switch is configured with the expected ACANEY-VTP domain while isolated.
+### Inspection préalable de l'état VTP
+**Indication pour la capture :** afficher les informations VTP du commutateur avant son intégration afin d'identifier son domaine, son mode, sa révision et sa base VLAN.
 
-### Capture 14 — Safe trunk integration
-The cleaned switch is connected through the trunk.
+### Nettoyage de la base VLAN
+**Indication pour la capture :** montrer les commandes ou l'étape utilisée pour supprimer l'ancienne base VLAN avant l'intégration.
 
-### Capture 15 — Safe synchronization
-The incoming switch adopts the existing VTP database.
+### Vérification de l'état propre
+**Indication pour la capture :** afficher l'état VTP/VLAN après le nettoyage et avant tout raccordement au domaine.
 
-### Capture 16 — Final safe state
-The existing domain remains at revision 8 with 9 VLANs and the incoming switch synchronizes correctly.
+### Préparation du domaine VTP attendu
+**Indication pour la capture :** montrer la configuration du domaine ACANEY-VTP sur le commutateur encore isolé.
 
-## Result
-The integration is controlled because the incoming switch is inspected and reset before participating in the VTP environment.
+### Intégration du commutateur nettoyé
+**Indication pour la capture :** montrer l'établissement du trunk entre le commutateur préparé et le domaine VTP existant.
+
+### Synchronisation contrôlée
+**Indication pour la capture :** afficher les informations VTP après intégration afin de vérifier que le commutateur adopte la base VLAN attendue.
+
+### Vérification finale de l'intégration
+**Indication pour la capture :** montrer l'état final du domaine et confirmer que celui-ci reste à la révision 8 avec 9 VLANs.
+
+## Ce que j'ai constaté
+
+La différence avec le premier scénario est importante : cette fois, le commutateur entrant n'arrive pas avec une ancienne base VLAN susceptible d'influencer le domaine.
+
+Cette manipulation m'a permis de comprendre qu'une intégration réseau propre commence **avant même de connecter l'équipement au réseau existant**.
+
+Le point essentiel que je retiens est donc la vérification préalable de l'état d'un équipement entrant, surtout lorsqu'il peut participer à un mécanisme de synchronisation comme VTP.
