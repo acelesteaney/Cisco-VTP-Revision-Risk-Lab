@@ -1,4 +1,4 @@
-# Cisco VTP — Configuration Revision Risk & Safe Integration
+# Cisco VTP - Configuration Revision Risk & Safe Integration
 
 A focused Cisco Packet Tracer laboratory demonstrating VTP synchronization, Configuration Revision risk and controlled switch integration.
 
