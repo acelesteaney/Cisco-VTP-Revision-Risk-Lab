@@ -2,7 +2,7 @@
 
 ## À travers ce lab
 
-À travers ce laboratoire, j'ai cherché à aller au-delà de la simple configuration de VTP dans Packet Tracer. En reproduisant volontairement une intégration à risque puis en la corrigeant avec une procédure maîtrisée, j'ai pu constater concrètement que la **Configuration Revision ne correspond pas au nombre de VLANs** et qu'un switch apparemment prêt à être raccordé peut modifier la base VLAN du domaine s'il n'est pas vérifié au préalable.
+À travers ce laboratoire, j'ai cherché à comprendre les risques liés à l'intégration d'un switch dans un domaine VTP, puis à mettre en place une procédure maîtrisée.
 
 ## Ce que j'ai travaillé
 - Comprendre VTP Server / Client.
@@ -33,8 +33,6 @@ Les deux fichiers Packet Tracer restent également regroupés dans [labs/](labs/
 ## Ma topologie
 
 Pour réaliser ce travail, j'ai construit une petite infrastructure de **quatre commutateurs** : un VTP Server, deux VTP Clients et un quatrième commutateur utilisé comme équipement expérimental puis entrant. J'ai volontairement isolé ce dernier afin de préparer séparément le scénario à risque, puis de tester une méthode d'intégration plus contrôlée.
-
-**Indication pour la capture :** ajouter ici la topologie initiale Packet Tracer avec les quatre commutateurs visibles et le commutateur expérimental isolé.
 
 Voir [la partie Topologie](topology/README.md).
 
