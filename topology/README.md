@@ -13,6 +13,6 @@ Le quatrième commutateur est volontairement séparé au début de l'expériment
 
 ## Topologie initiale
 
-![Topologie initiale du laboratoire VTP](../tests/screenshots/topology-initial.png)
+<img width="476" height="180" alt="Capture d&#39;écran 2026-10-10 235957" src="https://github.com/user-attachments/assets/891fb9a9-de40-4e79-8d2b-22d29c903661" />
 
 *La topologie montre les trois commutateurs du domaine initial et le commutateur entrant, laissé isolé avant les tests.*
