@@ -1,22 +1,31 @@
-# Screenshots
+# Captures d'écran
 
-Add the evidence here:
+Ce dossier regroupe les preuves visuelles utilisées dans la documentation du laboratoire. Les premières captures ont été préparées ; les suivantes pourront être ajoutées au fur et à mesure des scénarios.
 
-01-topology.png  
-02-initial-vtp-domain.png  
-03-higher-revision-switch.png  
-04-state-comparison.png  
-05-trunk-establishment.png  
-06-risky-vtp-synchronization.png  
-07-client-propagation.png  
-08-risky-final-state.png  
-09-incoming-switch-isolated.png  
-10-vtp-state-inspection.png  
-11-vlan-database-reset.png  
-12-clean-vtp-state.png  
-13-correct-vtp-domain.png  
-14-safe-trunk-integration.png  
-15-safe-vtp-synchronization.png  
-16-safe-final-state.png
+## Topologie et état initial
 
-Each capture should correspond to the appropriate step in the documentation.
+- `topology-initial.png` — topologie Packet Tracer avec le commutateur entrant isolé.
+- `initial-server.png` — sortie de `show vtp status` sur le serveur : domaine `ACANEY-VTP`, 9 VLANs, révision 8.
+- `initial-client1.png` — sortie de `show vtp status` sur le client 1 : mode Client, 9 VLANs, révision 8 ; le MD5 correspond à celui du serveur.
+- `initial-client2.png` — sortie de `show vtp status` sur le client 2.
+
+## Scénario à risque
+
+- `risky-other-before.png` — état VTP du commutateur entrant avant raccordement.
+- `risky-vlans-before.png` — base VLAN du commutateur entrant avant raccordement.
+- `risky-trunk.png` — état du trunk après raccordement.
+- `risky-server-after.png` — état VTP du serveur après synchronisation.
+- `risky-client-after.png` — état VTP d'un client après synchronisation.
+- `risky-other-after.png` — état VTP du commutateur entrant après synchronisation.
+
+## Scénario sécurisé
+
+- `safe-other-before.png` — état initial du commutateur entrant.
+- `safe-reset.png` — procédure de nettoyage, si cette capture est disponible.
+- `safe-clean-state.png` — vérification de l'état propre avant intégration.
+- `safe-trunk.png` — état du trunk après raccordement contrôlé.
+- `safe-server-final.png` — état VTP final du serveur.
+- `safe-client-final.png` — état VTP final d'un client.
+- `safe-other-final.png` — état VTP final du commutateur entrant.
+
+Chaque capture doit illustrer une étape réellement effectuée et correspondre aux résultats décrits dans les documents du laboratoire.
