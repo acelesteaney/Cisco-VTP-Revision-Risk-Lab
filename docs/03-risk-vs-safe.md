@@ -2,32 +2,27 @@
 
 ## Deux scénarios, une même question
 
-J'ai volontairement réalisé deux intégrations différentes avec le même objectif : comprendre ce qui change lorsque l'état du switch entrant est contrôlé avant son raccordement.
+J'ai réalisé deux essais pour observer les conséquences de l'état du commutateur entrant et de sa préparation avant raccordement.
 
-| | Intégration risquée | Intégration maîtrisée |
+| | Intégration à risque | Intégration avec préparation préalable |
 |---|---|---|
-| État du switch entrant | Révision supérieure / base VLAN différente | Ancienne base supprimée |
-| Domaine initial | Révision 8 / 9 VLANs | Révision 8 / 9 VLANs |
-| Avant raccordement | État non neutralisé | État vérifié et nettoyé |
-| Résultat observé | Révision 9 / 14 VLANs | Révision 8 / 9 VLANs |
-| Approche | Synchronisation non maîtrisée | Intégration contrôlée |
+| Préparation du commutateur entrant | Révision supérieure et base VLAN différente | Domaine VTP attendu configuré avant l'activation du trunk |
+| Nettoyage complet de la base VLAN | Non | Non |
+| Résultat observé | Le domaine passe à la révision 9 et 14 VLANs | Le domaine reste à la révision 8 et 9 VLANs |
+| Ce que l'essai illustre | Le risque lié à l'intégration d'un commutateur à révision supérieure | L'effet observé de la configuration préalable du domaine dans ce lab |
 
 ## Mon constat
 
-Le premier scénario m'a permis de voir le problème se produire. Le second m'a permis de comprendre comment éviter de reproduire cette situation.
+Le premier scénario m'a permis d'observer une synchronisation VTP à risque. Dans le second, j'ai configuré le domaine attendu sur le commutateur entrant avant d'activer le trunk, puis j'ai vérifié l'état final du domaine.
 
-Avant ce lab, la Configuration Revision pouvait facilement être comprise comme une simple information affichée par show vtp status. Après cette manipulation, je la considère plutôt comme **une information opérationnelle à vérifier avant l'intégration d'un équipement**.
+Il est important de préciser que **je n'ai pas supprimé `vlan.dat` ni effacé la configuration de démarrage** dans le second scénario. Je ne peux donc pas présenter cet essai comme une remise à zéro complète du commutateur.
 
-J'ai également retenu qu'un équipement réseau ne doit pas être considéré comme « neutre » simplement parce qu'il vient d'être ajouté à une topologie. Il peut conserver un état provenant d'un environnement précédent et cet état peut avoir des conséquences sur le réseau auquel il est raccordé.
+## Ce que ce lab m'a appris
 
-## Ce que ce lab démontre
+La Configuration Revision n'est pas le nombre de VLANs : c'est un compteur lié aux modifications de la base VLAN VTP. Un commutateur entrant doit donc être inspecté avant raccordement. La configuration préalable du nom de domaine ne remplace pas cette vérification et ne garantit pas, à elle seule, la remise à zéro de son état.
 
-À travers cette expérimentation, j'ai travaillé sur l'identification d'un risque de configuration, l'analyse de la Configuration Revision, la synchronisation d'une base VLAN avec VTP, l'observation de l'impact sur les clients, la préparation d'un équipement avant intégration et la vérification de l'état final.
+Pour une intégration réelle, je vérifierais au minimum `show vtp status` et `show vlan brief` avant le raccordement et je choisirais la procédure de préparation en fonction de l'état constaté.
 
-## Leçon clé
+Cette expérimentation m'a surtout appris à distinguer ce que j'ai réellement testé de ce qu'une procédure complète de remise à zéro exigerait.
 
-**Ne pas seulement savoir configurer un protocole : savoir vérifier l'état d'un équipement avant de l'introduire dans une infrastructure.**
-
-C'est finalement la partie que je retiens le plus de ce laboratoire : la compétence réseau ne consiste pas uniquement à connaître les commandes, mais aussi à comprendre **ce que l'équipement possède déjà, ce qu'il va annoncer au réseau et quelles conséquences son intégration peut produire**.
-
-> **Avant d'intégrer, je vérifie. Avant de modifier, je comprends.**
+**Avant d'intégrer, je vérifie. Avant de modifier, je comprends.**
