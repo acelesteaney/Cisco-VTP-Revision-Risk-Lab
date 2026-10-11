@@ -17,28 +17,25 @@ La révision du commutateur expérimental était donc volontairement supérieure
 ## Déroulement et éléments de preuve
 
 ### Architecture initiale du laboratoire
-**Indication pour la capture :** montrer la topologie complète avec le serveur VTP, les deux clients et le commutateur expérimental encore isolé.
+<img width="476" height="180" alt="Capture d&#39;écran 2026-10-10 235957" src="https://github.com/user-attachments/assets/12b86cbb-cfe8-4c59-8b60-aba2025d15ae" />
 
 ### État initial du domaine VTP
-**Indication pour la capture :** afficher le show vtp status du serveur avant l'intégration, avec la révision 8 et les 9 VLANs.
+<img width="404" height="194" alt="SERVER-Init - Copie" src="https://github.com/user-attachments/assets/8b444bdf-39c4-4a55-977c-5e53930c5069" />
 
 ### Préparation du commutateur à révision supérieure
-**Indication pour la capture :** afficher l'état VTP du commutateur expérimental montrant la révision 9 et les 14 VLANs.
-
-### Comparaison avant raccordement
-**Indication pour la capture :** mettre en évidence la différence entre l'état du domaine existant et celui du commutateur entrant avant de créer le lien.
+<img width="386" height="173" alt="Other-Init" src="https://github.com/user-attachments/assets/995ee907-701a-4ed1-a0e8-92eb050596bb" />
 
 ### Établissement du trunk
-**Indication pour la capture :** montrer la configuration ou la vérification du trunk entre le domaine existant et le commutateur expérimental.
+<img width="422" height="175" alt="Topologie" src="https://github.com/user-attachments/assets/484f1343-f96c-4fe5-853d-03cab398f7af" />
 
 ### Synchronisation VTP après intégration
-**Indication pour la capture :** afficher le show vtp status après raccordement et montrer que le domaine converge vers la révision 9 et les 14 VLANs.
+<img width="390" height="193" alt="Capture d&#39;écran 2026-10-11 005741" src="https://github.com/user-attachments/assets/a7a9f701-e390-47a3-8609-add02db47214" />
 
 ### Propagation vers les clients
-**Indication pour la capture :** afficher l'état VTP d'un ou des clients après synchronisation pour montrer la propagation de la nouvelle base VLAN.
+<img width="390" height="193" alt="Capture d&#39;écran 2026-10-11 005741" src="https://github.com/user-attachments/assets/5becef26-f920-4757-8863-1f687313c9dd" />
 
 ### État final après l'intégration à risque
-**Indication pour la capture :** montrer l'état final des équipements et la convergence de la révision et de la base VLAN.
+<img width="448" height="249" alt="Capture d&#39;écran 2026-10-11 012646" src="https://github.com/user-attachments/assets/850510b8-e454-420c-83e3-e0202afe7214" />
 
 ## Ce que j'ai constaté
 
