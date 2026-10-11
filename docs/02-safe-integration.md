@@ -1,45 +1,37 @@
-# 02 — Intégration VTP sécurisée
+# 02 — Intégration VTP avec préparation préalable
 
 ## Pourquoi j'ai réalisé ce scénario
 
-Après avoir volontairement provoqué le scénario à risque, je voulais tester l'approche inverse : **comment intégrer le même type de switch sans lui permettre d'imposer son ancienne base VLAN au domaine existant ?**
-
-J'ai donc repris le problème sous l'angle d'une intégration contrôlée.
+Après avoir observé les conséquences d'une intégration à risque, j'ai voulu tester une autre méthode : préparer le commutateur entrant avant d'activer le trunk vers le domaine VTP existant.
 
 ## Principe retenu
 
-Le commutateur entrant doit être : isolé, inspecté, nettoyé de son ancienne base VLAN et de sa configuration, préparé avec les paramètres attendus, puis seulement raccordé au domaine existant.
+Dans ce scénario, je n'ai pas supprimé `vlan.dat` ni effacé la configuration de démarrage. J'ai simplement configuré le domaine VTP attendu sur le commutateur entrant alors qu'il était encore isolé, puis j'ai activé le trunk.
+
+Il s'agit donc d'une **préparation préalable du domaine avant raccordement**, et non d'une remise à zéro complète de la base VLAN.
 
 ## Déroulement et éléments de preuve
 
 ### Isolement du commutateur entrant
-**Indication pour la capture :** montrer que le commutateur expérimental est encore séparé du domaine existant avant toute opération de nettoyage.
 
-### Inspection préalable de l'état VTP
-**Indication pour la capture :** afficher les informations VTP du commutateur avant son intégration afin d'identifier son domaine, son mode, sa révision et sa base VLAN.
+Le commutateur expérimental reste isolé du domaine existant pendant sa préparation.
 
-### Nettoyage de la base VLAN
-**Indication pour la capture :** montrer les commandes ou l'étape utilisée pour supprimer l'ancienne base VLAN avant l'intégration.
+### Configuration du domaine VTP attendu
 
-### Vérification de l'état propre
-**Indication pour la capture :** afficher l'état VTP/VLAN après le nettoyage et avant tout raccordement au domaine.
+J'ai configuré le domaine `ACANEY-VTP` sur le commutateur entrant avant d'activer le trunk.
 
-### Préparation du domaine VTP attendu
-**Indication pour la capture :** montrer la configuration du domaine ACANEY-VTP sur le commutateur encore isolé.
+### Activation du trunk
 
-### Intégration du commutateur nettoyé
-**Indication pour la capture :** montrer l'établissement du trunk entre le commutateur préparé et le domaine VTP existant.
+Une fois le domaine configuré, j'ai activé la liaison trunk vers le domaine existant.
 
-### Synchronisation contrôlée
-**Indication pour la capture :** afficher les informations VTP après intégration afin de vérifier que le commutateur adopte la base VLAN attendue.
+### Vérification après intégration
 
-### Vérification finale de l'intégration
-**Indication pour la capture :** montrer l'état final du domaine et confirmer que celui-ci reste à la révision 8 avec 9 VLANs.
+Après le raccordement, j'ai vérifié l'état VTP des commutateurs. Dans l'état final observé, le domaine affichait 9 VLANs et la révision 8.
 
 ## Ce que j'ai constaté
 
-La différence avec le premier scénario est importante : cette fois, le commutateur entrant n'arrive pas avec une ancienne base VLAN susceptible d'influencer le domaine.
+Cette méthode m'a permis d'observer le résultat d'une préparation du domaine VTP avant l'activation du trunk. Toutefois, comme je n'ai pas supprimé l'ancienne base VLAN ni effectué une remise à zéro complète, je ne présente pas cette étape comme un nettoyage garanti de l'état VTP.
 
-Cette manipulation m'a permis de comprendre qu'une intégration réseau propre commence **avant même de connecter l'équipement au réseau existant**.
+**Point technique à retenir :** changer le nom du domaine VTP ne garantit pas, à lui seul, que la base VLAN et la Configuration Revision ont été réinitialisées. Avant de connecter un commutateur provenant d'un autre environnement, il faut vérifier son état réel avec `show vtp status` et `show vlan brief`, puis choisir une procédure adaptée au contexte.
 
-Le point essentiel que je retiens est donc la vérification préalable de l'état d'un équipement entrant, surtout lorsqu'il peut participer à un mécanisme de synchronisation comme VTP.
+Cette expérience m'a appris à distinguer une préparation de configuration d'une véritable remise à zéro de l'état VTP.
