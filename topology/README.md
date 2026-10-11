@@ -7,10 +7,12 @@ Pour ce laboratoire, j'ai volontairement construit une petite infrastructure de 
 | ACANEY-SW-VTP-SERVER | Serveur VTP |
 | ACANEY-SW-VTP-CLIENT-1 | Client VTP |
 | ACANEY-SW-VTP-CLIENT-2 | Client VTP |
-| ACANEY-SW-VTP-OTHER | Commutateur expérimental / entrant |
+| ACANEY-SW-VTP-CLIENT-OTHER | Commutateur expérimental / entrant |
 
 Le quatrième commutateur est volontairement séparé au début de l'expérimentation. Cette séparation m'a permis de préparer le scénario à risque, puis de reprendre le même principe avec une procédure d'intégration contrôlée.
 
-## Illustration de la topologie
+## Topologie initiale
 
-**Indication pour la capture :** ajouter ici une capture de la topologie initiale dans Packet Tracer, avec les quatre commutateurs clairement visibles et le commutateur expérimental isolé du domaine VTP existant.
+![Topologie initiale du laboratoire VTP](../tests/screenshots/topology-initial.png)
+
+*La topologie montre les trois commutateurs du domaine initial et le commutateur entrant, laissé isolé avant les tests.*
